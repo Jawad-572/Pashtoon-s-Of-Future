@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بیچ 1 لاگ ان — پختونز آف فیوچر</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#181B22; --card:#232733; --border:#2E3340; --text:#F5F6F8;
+    --muted:#9AA1AF; --accent:#3D8BFF; --accent-2:#7C5CFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    font-family:'Noto Nastaliq Urdu','Segoe UI',Tahoma,sans-serif;line-height:2;
+  }
+  .card{
+    max-width:420px;width:100%;background:var(--card);border:1px solid var(--border);
+    border-radius:18px;padding:34px 28px;
+  }
+  h1{font-size:22px;text-align:center;margin-bottom:8px;}
+  .sub{color:var(--muted);font-size:14px;text-align:center;margin-bottom:28px;}
+  .field{margin-bottom:16px;text-align:right;}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .field input{
+    width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg);color:var(--text);font-family:inherit;font-size:15px;
+  }
+  .field input:focus{outline:none;border-color:var(--accent);}
+  button{
+    width:100%;margin-top:8px;padding:14px;border:none;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+    font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;
+  }
+  button:disabled{opacity:0.6;cursor:not-allowed;}
+  .status{margin-top:16px;font-size:13.5px;text-align:center;display:none;}
+  .status.err{color:#FF6B6B;display:block;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>بیچ 1 — پختونز آف فیوچر</h1>
+    <p class="sub">ویڈیوز تک رسائی کے لیے اپنا ای میل اور رسائی کوڈ درج کریں۔</p>
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">ای میل ایڈریس</label>
+        <input type="email" id="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="code">رسائی کوڈ</label>
+        <input type="password" id="code" required placeholder="آپ کو بھیجا گیا کوڈ">
+      </div>
+      <button type="submit" id="loginBtn">داخل ہوں</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+<script>
+  const form = document.getElementById("loginForm");
+  const btn = document.getElementById("loginBtn");
+  const status = document.getElementById("status");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = "چیک ہو رہا ہے...";
+    status.className = "status";
+
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          code: document.getElementById("code").value,
+        }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        window.location.href = "/batch1.html";
+      } else {
+        status.textContent = data.error || "لاگ ان ناکام ہوا۔";
+        status.classList.add("err");
+      }
+    } catch (err) {
+      status.textContent = "سرور سے رابطہ نہیں ہو سکا۔ دوبارہ کوشش کریں۔";
+      status.classList.add("err");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "داخل ہوں";
+    }
+  });
+</script>
+</body>
+</html>

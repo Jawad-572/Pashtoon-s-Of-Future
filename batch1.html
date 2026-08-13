@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بیچ 1 ویڈیوز — پختونز آف فیوچر</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#181B22; --card:#232733; --border:#2E3340; --text:#F5F6F8;
+    --muted:#9AA1AF; --accent:#3D8BFF; --accent-2:#7C5CFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);min-height:100vh;
+    font-family:'Noto Nastaliq Urdu','Segoe UI',Tahoma,sans-serif;line-height:1.9;
+    user-select:none;-webkit-user-select:none;
+  }
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 24px;border-bottom:1px solid var(--border);
+  }
+  .logo{font-weight:800;font-size:15px;}
+  .logout-btn{
+    background:transparent;border:1px solid var(--border);color:var(--muted);
+    padding:8px 16px;border-radius:8px;font-family:inherit;font-size:13px;cursor:pointer;
+  }
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px;}
+
+  .lesson-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+  .lesson-btn{
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    padding:10px 18px;border-radius:10px;font-family:inherit;font-size:14px;cursor:pointer;
+  }
+  .lesson-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;}
+
+  .player-shell{
+    position:relative;background:#000;border-radius:16px;overflow:hidden;
+    aspect-ratio:16/9;
+  }
+  video{width:100%;height:100%;display:block;}
+  .player-shell video::-webkit-media-controls-download-button{display:none;}
+
+  .watermark{
+    position:absolute;pointer-events:none;color:rgba(255,255,255,0.55);
+    font-size:13px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,0.6);
+    transition:top 3s linear, left 3s linear;white-space:nowrap;
+  }
+
+  .blur-overlay{
+    position:absolute;inset:0;background:rgba(10,12,16,0.97);
+    display:none;align-items:center;justify-content:center;text-align:center;
+    padding:24px;font-size:15px;color:var(--muted);z-index:5;
+  }
+  .blur-overlay.show{display:flex;}
+
+  .loading{color:var(--muted);text-align:center;padding:60px 0;}
+  .notice{
+    margin-top:18px;background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;font-size:13.5px;color:var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">پختونز آف فیوچر — بیچ 1</div>
+  <button class="logout-btn" id="logoutBtn">لاگ آؤٹ</button>
+</header>
+
+<div class="wrap">
+  <div class="lesson-list" id="lessonList"></div>
+
+  <div class="player-shell" id="playerShell">
+    <div class="loading" id="loadingMsg">ویڈیو لوڈ ہو رہی ہے...</div>
+    <video id="player" controls controlsList="nodownload noremoteplayback" disablePictureInPicture playsinline style="display:none;"></video>
+    <div class="watermark" id="watermark"></div>
+    <div class="blur-overlay" id="blurOverlay">
+      ویڈیو محفوظ ہے۔<br>براہ کرم اس ٹیب پر واپس آئیں تاکہ دیکھنا جاری رکھ سکیں۔
+    </div>
+  </div>
+
+  <div class="notice">
+    یہ ویڈیوز صرف آپ کی ذاتی رسائی کے لیے ہیں۔ اسکرین شاٹس یا ویڈیو شیئر کرنا اکاؤنٹ بند ہونے کا سبب بن سکتا ہے۔
+  </div>
+</div>
+
+<script>
+  // ---- EDIT THIS LIST when you upload new lesson videos ----
+  const LESSONS = [
+    { title: "سبق 1", path: "lesson-1.mp4" },
+    { title: "سبق 2", path: "lesson-2.mp4" },
+    { title: "سبق 3", path: "lesson-3.mp4" },
+  ];
+
+  let currentEmail = "";
+  const player = document.getElementById("player");
+  const loadingMsg = document.getElementById("loadingMsg");
+  const watermark = document.getElementById("watermark");
+  const blurOverlay = document.getElementById("blurOverlay");
+  const lessonList = document.getElementById("lessonList");
+
+  // ---- Auth check ----
+  async function checkSession() {
+    try {
+      const res = await fetch("/api/session-check");
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        window.location.href = "/batch1-login.html";
+        return;
+      }
+      currentEmail = data.email;
+      watermark.textContent = currentEmail;
+      buildLessonList();
+      loadLesson(LESSONS[0].path);
+    } catch (err) {
+      window.location.href = "/batch1-login.html";
+    }
+  }
+
+  function buildLessonList() {
+    lessonList.innerHTML = "";
+    LESSONS.forEach((lesson, i) => {
+      const btn = document.createElement("button");
+      btn.className = "lesson-btn" + (i === 0 ? " active" : "");
+      btn.textContent = lesson.title;
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".lesson-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        loadLesson(lesson.path);
+      });
+      lessonList.appendChild(btn);
+    });
+  }
+
+  async function loadLesson(path) {
+    loadingMsg.style.display = "block";
+    player.style.display = "none";
+    try {
+      const res = await fetch("/api/get-video-url", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "load failed");
+
+      player.src = data.url;
+      player.style.display = "block";
+      loadingMsg.style.display = "none";
+    } catch (err) {
+      loadingMsg.textContent = "یہ ویڈیو لوڈ نہیں ہو سکی۔ دوبارہ کوشش کریں۔";
+    }
+  }
+
+  // ---- Moving watermark ----
+  function moveWatermark() {
+    const top = Math.random() * 80 + 5;
+    const left = Math.random() * 60 + 5;
+    watermark.style.top = top + "%";
+    watermark.style.left = left + "%";
+  }
+  moveWatermark();
+  setInterval(moveWatermark, 4000);
+
+  // ---- Deterrents (not foolproof, but raise friction + accountability) ----
+  document.addEventListener("contextmenu", (e) => e.preventDefault());
+  document.addEventListener("dragstart", (e) => e.preventDefault());
+  document.addEventListener("keydown", (e) => {
+    const blocked =
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
+      (e.ctrlKey && e.key.toUpperCase() === "U") ||
+      (e.ctrlKey && e.key.toUpperCase() === "S");
+    if (blocked) e.preventDefault();
+  });
+
+  // Pause + blur when tab loses focus (deters screen-recording apps / switching to record)
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (!player.paused) player.pause();
+      blurOverlay.classList.add("show");
+    } else {
+      blurOverlay.classList.remove("show");
+    }
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await fetch("/api/logout", { method: "POST" });
+    window.location.href = "/batch1-login.html";
+  });
+
+  checkSession();
+</script>
+</body>
+</html>
