@@ -263,31 +263,6 @@
   <a class="cta-primary" href="#payment">ابھی داخلہ لیں</a>
 </section>
 
-<section class="signup" id="signup">
-  <div class="section-label">داخلہ کھلا ہے</div>
-  <h2>بیچ 1 میں اپنی جگہ محفوظ کریں</h2>
-  <div class="signup-card">
-    <span class="signup-badge">بیچ 1 — محدود نشستیں</span>
-    <p class="desc">اپنا نام اور ای میل درج کریں تاکہ ہم آپ کو کورس اپڈیٹس، کلاسز کے اوقات، اور رسائی کی تفصیلات بھیج سکیں۔</p>
-    <form id="batchSignupForm">
-      <div class="signup-field">
-        <label for="signupName">پورا نام</label>
-        <input type="text" id="signupName" name="name" required placeholder="اپنا نام لکھیں">
-      </div>
-      <div class="signup-field">
-        <label for="signupEmail">ای میل ایڈریس</label>
-        <input type="email" id="signupEmail" name="email" required placeholder="you@example.com">
-      </div>
-      <div class="signup-field">
-        <label for="signupWhatsapp">واٹس ایپ نمبر (اختیاری)</label>
-        <input type="tel" id="signupWhatsapp" name="whatsapp" placeholder="03XXXXXXXXX">
-      </div>
-      <button type="submit" class="signup-submit" id="signupBtn">بیچ 1 میں شامل ہوں</button>
-      <div class="signup-status" id="signupStatus"></div>
-    </form>
-  </div>
-</section>
-
 <section class="payment" id="payment">
   <div class="section-label">ابھی داخلہ لیں</div>
   <h2>سکین کر کے ادائیگی کریں</h2>
@@ -320,6 +295,8 @@
     <div class="pay-confirm">
       ادائیگی کے بعد، اپنا اسکرین شاٹ اور ای میل بھیج کر کورس تک رسائی حاصل کریں۔ تصدیق کے لیے واٹس ایپ یا انسٹاگرام پر پیغام بھیجیں۔
     </div>
+
+    <a href="batch1-register.html" class="cta-primary" style="display:block;margin-top:24px;">ادائیگی مکمل کر لی؟ رجسٹریشن کریں ◀</a>
   </div>
 </section>
 
@@ -329,7 +306,7 @@
 <script>
   // Optional: your Formspree endpoint, just for an instant email ping to you.
   // The REAL save (that grants video access later) happens via /api/register below.
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xeajkryq"; // <-- replace with your real Formspree endpoint
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // <-- replace with your real Formspree endpoint
 
   const batchForm = document.getElementById("batchSignupForm");
   const signupBtn = document.getElementById("signupBtn");
