@@ -3,7 +3,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, email, whatsapp } = req.body || {};
+  const { name, email, whatsapp, paymentRef } = req.body || {};
   if (!name || !email) {
     return res.status(400).json({ error: "Name and email are required" });
   }
@@ -26,6 +26,7 @@ module.exports = async (req, res) => {
           email: cleanEmail,
           name: String(name).trim(),
           whatsapp: whatsapp ? String(whatsapp).trim() : null,
+          payment_ref: paymentRef ? String(paymentRef).trim() : null,
         },
       ]),
     });
