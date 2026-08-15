@@ -3,197 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بیچ 1 ویڈیوز — پختونز آف فیوچر</title>
+<title>بیچ 1 رجسٹریشن — پختونز آف فیوچر</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#181B22; --card:#232733; --border:#2E3340; --text:#F5F6F8;
-    --muted:#9AA1AF; --accent:#3D8BFF; --accent-2:#7C5CFF;
+    --bg:#1C1410; --bg-alt:#241A14; --card:#2B1F17; --border:#4A3323;
+    --text:#F7EFE3; --muted:#C4AD93; --accent:#B3122B; --accent-2:#D9A93B; --accent-3:#3E7455;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     background:var(--bg);color:var(--text);min-height:100vh;
-    font-family:'Noto Nastaliq Urdu','Segoe UI',Tahoma,sans-serif;line-height:1.9;
-    user-select:none;-webkit-user-select:none;
+    font-family:'Noto Nastaliq Urdu','Segoe UI',Tahoma,sans-serif;line-height:2;
+    display:flex;align-items:center;justify-content:center;padding:24px;
   }
-  header{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:18px 24px;border-bottom:1px solid var(--border);
+  .motif{
+    position:fixed;top:0;left:0;right:0;height:10px;
+    background:
+      linear-gradient(135deg, var(--accent) 25%, transparent 25%) 0 0/16px 16px,
+      linear-gradient(-135deg, var(--accent-2) 25%, transparent 25%) 0 0/16px 16px,
+      linear-gradient(45deg, var(--accent-2) 25%, transparent 25%) 0 0/16px 16px,
+      linear-gradient(-45deg, var(--accent) 25%, transparent 25%) 0 0/16px 16px;
+    background-color:var(--bg);
   }
-  .logo{font-weight:800;font-size:15px;}
-  .logout-btn{
-    background:transparent;border:1px solid var(--border);color:var(--muted);
-    padding:8px 16px;border-radius:8px;font-family:inherit;font-size:13px;cursor:pointer;
+  .signup-card{
+    max-width:460px;width:100%;background:var(--card);border:1px solid var(--border);
+    border-top:3px solid var(--accent-2);border-radius:14px;padding:34px 30px;margin-top:20px;
   }
-  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px;}
-
-  .lesson-list{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
-  .lesson-btn{
-    background:var(--card);border:1px solid var(--border);color:var(--text);
-    padding:10px 18px;border-radius:10px;font-family:inherit;font-size:14px;cursor:pointer;
+  .back-link{display:block;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:18px;text-align:center;}
+  .signup-badge{
+    display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:16px;
   }
-  .lesson-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;}
-
-  .player-shell{
-    position:relative;background:#000;border-radius:16px;overflow:hidden;
-    aspect-ratio:16/9;
+  h1{font-size:22px;margin-bottom:8px;}
+  .signup-card p.desc{color:var(--muted);font-size:14px;margin-bottom:22px;}
+  .signup-field{margin-bottom:14px;text-align:right;}
+  .signup-field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .signup-field input{
+    width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg);color:var(--text);font-family:inherit;font-size:15px;
   }
-  video{width:100%;height:100%;display:block;}
-  .player-shell video::-webkit-media-controls-download-button{display:none;}
-
-  .watermark{
-    position:absolute;pointer-events:none;color:rgba(255,255,255,0.55);
-    font-size:13px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,0.6);
-    transition:top 3s linear, left 3s linear;white-space:nowrap;
+  .signup-field input:focus{outline:none;border-color:var(--accent-2);}
+  .confirm-check{
+    display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:1px dashed var(--border);
+    border-radius:10px;padding:14px;margin-bottom:18px;
   }
-
-  .blur-overlay{
-    position:absolute;inset:0;background:rgba(10,12,16,0.97);
-    display:none;align-items:center;justify-content:center;text-align:center;
-    padding:24px;font-size:15px;color:var(--muted);z-index:5;
+  .confirm-check input{margin-top:4px;width:18px;height:18px;flex-shrink:0;}
+  .confirm-check label{font-size:13.5px;color:var(--muted);text-align:right;}
+  .signup-submit{
+    width:100%;margin-top:6px;padding:14px;border:none;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),#8E0E22);color:#fff;
+    font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;
   }
-  .blur-overlay.show{display:flex;}
-
-  .loading{color:var(--muted);text-align:center;padding:60px 0;}
-  .notice{
-    margin-top:18px;background:var(--card);border:1px solid var(--border);
-    border-radius:12px;padding:16px 18px;font-size:13.5px;color:var(--muted);
-  }
+  .signup-submit:disabled{opacity:0.5;cursor:not-allowed;}
+  .signup-status{margin-top:14px;font-size:13.5px;text-align:center;display:none;}
+  .signup-status.ok{color:var(--accent-3);display:block;}
+  .signup-status.err{color:#E4574C;display:block;}
 </style>
 </head>
 <body>
+<div class="motif"></div>
 
-<header>
-  <div class="logo">پختونز آف فیوچر — بیچ 1</div>
-  <button class="logout-btn" id="logoutBtn">لاگ آؤٹ</button>
-</header>
+<div class="signup-card">
+  <a href="index.html#payment" class="back-link">◀ ادائیگی کی تفصیلات پر واپس جائیں</a>
+  <span class="signup-badge">بیچ 1 — محدود نشستیں</span>
+  <h1>اپنی جگہ محفوظ کریں</h1>
+  <p class="desc">صرف وہی رجسٹریشن مکمل کریں جنہوں نے ادائیگی مکمل کر لی ہے۔ آپ کی معلومات محفوظ کی جائیں گی اور ادائیگی کی تصدیق کے بعد آپ کو ویڈیوز اور مواد تک رسائی مل جائے گی۔</p>
 
-<div class="wrap">
-  <div class="lesson-list" id="lessonList"></div>
-
-  <div class="player-shell" id="playerShell">
-    <div class="loading" id="loadingMsg">ویڈیو لوڈ ہو رہی ہے...</div>
-    <video id="player" controls controlsList="nodownload noremoteplayback" disablePictureInPicture playsinline style="display:none;"></video>
-    <div class="watermark" id="watermark"></div>
-    <div class="blur-overlay" id="blurOverlay">
-      ویڈیو محفوظ ہے۔<br>براہ کرم اس ٹیب پر واپس آئیں تاکہ دیکھنا جاری رکھ سکیں۔
+  <form id="batchSignupForm">
+    <div class="signup-field">
+      <label for="signupName">پورا نام</label>
+      <input type="text" id="signupName" name="name" required placeholder="اپنا نام لکھیں">
     </div>
-  </div>
+    <div class="signup-field">
+      <label for="signupEmail">ای میل ایڈریس</label>
+      <input type="email" id="signupEmail" name="email" required placeholder="you@example.com">
+    </div>
+    <div class="signup-field">
+      <label for="signupWhatsapp">واٹس ایپ نمبر</label>
+      <input type="tel" id="signupWhatsapp" name="whatsapp" required placeholder="03XXXXXXXXX">
+    </div>
+    <div class="signup-field">
+      <label for="signupRef">ادائیگی کا حوالہ (اختیاری — ٹرانزیکشن نمبر یا آخری 4 ہندسے)</label>
+      <input type="text" id="signupRef" name="paymentRef" placeholder="مثلاً: 1234">
+    </div>
 
-  <div class="notice">
-    یہ ویڈیوز صرف آپ کی ذاتی رسائی کے لیے ہیں۔ اسکرین شاٹس یا ویڈیو شیئر کرنا اکاؤنٹ بند ہونے کا سبب بن سکتا ہے۔
-  </div>
+    <div class="confirm-check">
+      <input type="checkbox" id="paidConfirm" required>
+      <label for="paidConfirm">میں تصدیق کرتا/کرتی ہوں کہ میں نے QR کوڈ یا ایزی پیسہ کے ذریعے $10 کی ادائیگی مکمل کر لی ہے اور اسکرین شاٹ واٹس ایپ یا انسٹاگرام پر بھیج دیا ہے۔</label>
+    </div>
+
+    <button type="submit" class="signup-submit" id="signupBtn">رجسٹریشن مکمل کریں</button>
+    <div class="signup-status" id="signupStatus"></div>
+  </form>
 </div>
 
 <script>
-  // ---- EDIT THIS LIST when you upload new lesson videos ----
-  const LESSONS = [
-    { title: "سبق 1", path: "lesson-1.mp4" },
-    { title: "سبق 2", path: "lesson-2.mp4" },
-    { title: "سبق 3", path: "lesson-3.mp4" },
-  ];
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // <-- replace with your real Formspree endpoint
 
-  let currentEmail = "";
-  const player = document.getElementById("player");
-  const loadingMsg = document.getElementById("loadingMsg");
-  const watermark = document.getElementById("watermark");
-  const blurOverlay = document.getElementById("blurOverlay");
-  const lessonList = document.getElementById("lessonList");
+  const batchForm = document.getElementById("batchSignupForm");
+  const signupBtn = document.getElementById("signupBtn");
+  const signupStatus = document.getElementById("signupStatus");
 
-  // ---- Auth check ----
-  async function checkSession() {
+  batchForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    signupBtn.disabled = true;
+    signupBtn.textContent = "بھیجا جا رہا ہے...";
+    signupStatus.className = "signup-status";
+    signupStatus.textContent = "";
+
+    const name = document.getElementById("signupName").value;
+    const email = document.getElementById("signupEmail").value;
+    const whatsapp = document.getElementById("signupWhatsapp").value;
+    const paymentRef = document.getElementById("signupRef").value;
+
     try {
-      const res = await fetch("/api/session-check");
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        window.location.href = "/batch1-login.html";
-        return;
-      }
-      currentEmail = data.email;
-      watermark.textContent = currentEmail;
-      buildLessonList();
-      loadLesson(LESSONS[0].path);
-    } catch (err) {
-      window.location.href = "/batch1-login.html";
-    }
-  }
-
-  function buildLessonList() {
-    lessonList.innerHTML = "";
-    LESSONS.forEach((lesson, i) => {
-      const btn = document.createElement("button");
-      btn.className = "lesson-btn" + (i === 0 ? " active" : "");
-      btn.textContent = lesson.title;
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".lesson-btn").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        loadLesson(lesson.path);
-      });
-      lessonList.appendChild(btn);
-    });
-  }
-
-  async function loadLesson(path) {
-    loadingMsg.style.display = "block";
-    player.style.display = "none";
-    try {
-      const res = await fetch("/api/get-video-url", {
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path }),
+        body: JSON.stringify({ name, email, whatsapp, paymentRef }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "load failed");
 
-      player.src = data.url;
-      player.style.display = "block";
-      loadingMsg.style.display = "none";
+      if (!res.ok) throw new Error(data.error || "register failed");
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, whatsapp, paymentRef, batch: "Batch 1", note: "Confirmed payment before registering" }),
+      }).catch(() => {});
+
+      signupStatus.textContent = "شکریہ! آپ کی رجسٹریشن موصول ہو گئی ہے۔ ادائیگی کی تصدیق کے بعد آپ کو رسائی مل جائے گی۔";
+      signupStatus.classList.add("ok");
+      batchForm.reset();
     } catch (err) {
-      loadingMsg.textContent = "یہ ویڈیو لوڈ نہیں ہو سکی۔ دوبارہ کوشش کریں۔";
-    }
-  }
-
-  // ---- Moving watermark ----
-  function moveWatermark() {
-    const top = Math.random() * 80 + 5;
-    const left = Math.random() * 60 + 5;
-    watermark.style.top = top + "%";
-    watermark.style.left = left + "%";
-  }
-  moveWatermark();
-  setInterval(moveWatermark, 4000);
-
-  // ---- Deterrents (not foolproof, but raise friction + accountability) ----
-  document.addEventListener("contextmenu", (e) => e.preventDefault());
-  document.addEventListener("dragstart", (e) => e.preventDefault());
-  document.addEventListener("keydown", (e) => {
-    const blocked =
-      e.key === "F12" ||
-      (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key.toUpperCase())) ||
-      (e.ctrlKey && e.key.toUpperCase() === "U") ||
-      (e.ctrlKey && e.key.toUpperCase() === "S");
-    if (blocked) e.preventDefault();
-  });
-
-  // Pause + blur when tab loses focus (deters screen-recording apps / switching to record)
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      if (!player.paused) player.pause();
-      blurOverlay.classList.add("show");
-    } else {
-      blurOverlay.classList.remove("show");
+      signupStatus.textContent = "معذرت، کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں یا واٹس ایپ پر رابطہ کریں۔";
+      signupStatus.classList.add("err");
+    } finally {
+      signupBtn.disabled = false;
+      signupBtn.textContent = "رجسٹریشن مکمل کریں";
     }
   });
-
-  document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await fetch("/api/logout", { method: "POST" });
-    window.location.href = "/batch1-login.html";
-  });
-
-  checkSession();
 </script>
 </body>
 </html>
