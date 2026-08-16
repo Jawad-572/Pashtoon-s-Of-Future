@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بیچ 1 رجسٹریشن — پختونز آف فیوچر</title>
+<title>بیچ 2 رجسٹریشن — پختونز آف فیوچر</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +68,7 @@
 
 <div class="signup-card">
   <a href="index.html#payment" class="back-link">◀ ادائیگی کی تفصیلات پر واپس جائیں</a>
-  <span class="signup-badge">بیچ 1 — محدود نشستیں</span>
+  <span class="signup-badge">بیچ 2 — محدود نشستیں</span>
   <h1>اپنی جگہ محفوظ کریں</h1>
   <p class="desc">صرف وہی رجسٹریشن مکمل کریں جنہوں نے ادائیگی مکمل کر لی ہے۔ آپ کی معلومات محفوظ کی جائیں گی اور ادائیگی کی تصدیق کے بعد آپ کو ویڈیوز اور مواد تک رسائی مل جائے گی۔</p>
 
@@ -92,7 +92,7 @@
 
     <div class="confirm-check">
       <input type="checkbox" id="paidConfirm" required>
-      <label for="paidConfirm">میں تصدیق کرتا/کرتی ہوں کہ میں نے QR کوڈ یا ایزی پیسہ کے ذریعے $10 کی ادائیگی مکمل کر لی ہے اور اسکرین شاٹ واٹس ایپ یا انسٹاگرام پر بھیج دیا ہے۔</label>
+      <label for="paidConfirm">میں تصدیق کرتا/کرتی ہوں کہ میں نے QR کوڈ یا ایزی پیسہ کے ذریعے $20 کی ادائیگی مکمل کر لی ہے اور اسکرین شاٹ واٹس ایپ یا انسٹاگرام پر بھیج دیا ہے۔</label>
     </div>
 
     <button type="submit" class="signup-submit" id="signupBtn">رجسٹریشن مکمل کریں</button>
@@ -101,7 +101,7 @@
 </div>
 
 <script>
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xeajkryq"; // <-- replace with your real Formspree endpoint
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // <-- replace with your real Formspree endpoint
 
   const batchForm = document.getElementById("batchSignupForm");
   const signupBtn = document.getElementById("signupBtn");
@@ -132,7 +132,7 @@
       fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, whatsapp, paymentRef, batch: "Batch 1", note: "Confirmed payment before registering" }),
+        body: JSON.stringify({ name, email, whatsapp, paymentRef, batch: "Batch 2", note: "Confirmed payment before registering" }),
       }).catch(() => {});
 
       signupStatus.textContent = "شکریہ! آپ کی رجسٹریشن موصول ہو گئی ہے۔ ادائیگی کی تصدیق کے بعد آپ کو رسائی مل جائے گی۔";
