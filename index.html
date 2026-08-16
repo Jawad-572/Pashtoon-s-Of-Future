@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>پختونز آف فیوچر — شاپیفائی، ایمازون، ای بے اور ٹک ٹاک شاپ سیکھیں | $10 کورس</title>
-<meta name="description" content="فیس بک مارکیٹ پلیس، شاپیفائی، ایمازون، ای بے، علی بابا اور ٹک ٹاک شاپ کے ساتھ انسٹاگرام گروتھ سیکھیں، صرف $10 میں۔ شاپیفائی سبسکرپشن اور تیار لینڈنگ پیج بھی شامل ہے۔">
-<meta name="theme-color" content="#1C1410">
+<title>پختونز آف فیوچر — شاپیفائی، ایمازون، ای بے اور ٹک ٹاک شاپ سیکھیں | $20 کورس</title>
+<meta name="description" content="فیس بک مارکیٹ پلیس، شاپیفائی، ایمازون، ای بے، علی بابا اور ٹک ٹاک شاپ کے ساتھ انسٹاگرام گروتھ سیکھیں، صرف $20 میں۔ شاپیفائی سبسکرپشن اور تیار لینڈنگ پیج بھی شامل ہے۔">
+<meta name="theme-color" content="#0B2B26">
 <link rel="canonical" href="https://pashtoonsoffuture.com/">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png" type="image/png">
@@ -15,15 +15,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#1C1410;
-    --bg-alt:#241A14;
-    --card:#2B1F17;
-    --border:#4A3323;
-    --text:#F7EFE3;
-    --muted:#C4AD93;
-    --accent:#B3122B;
-    --accent-2:#D9A93B;
-    --accent-3:#3E7455;
+    --bg:#0B2B26;
+    --bg-alt:#123832;
+    --card:#164039;
+    --border:#2A5C50;
+    --text:#F4F1E8;
+    --muted:#9FC5B8;
+    --accent:#F2994A;
+    --accent-2:#F5C24C;
+    --accent-3:#27AE60;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -57,7 +57,7 @@
 
   .hero{position:relative;padding:64px 24px 52px;text-align:center;overflow:hidden;
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(179,18,43,0.18), transparent 60%),
+      radial-gradient(ellipse at 50% 0%, rgba(242,153,74,0.18), transparent 60%),
       var(--bg);
   }
   .hero::before{
@@ -71,6 +71,7 @@
     background-position:0 0, 0 17px, 17px -17px, -17px 0px;
   }
   .hero > *{position:relative;z-index:1;}
+  .gate-icon{margin:0 auto 22px;display:block;opacity:0.92;}
   .eyebrow{
     display:inline-block;color:var(--accent-2);font-weight:700;font-size:12.5px;
     letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;
@@ -79,14 +80,58 @@
   h1{font-size:38px;line-height:1.25;font-weight:800;max-width:720px;margin:0 auto 20px;}
   .sub{color:var(--muted);max-width:600px;margin:0 auto 30px;font-size:16px;}
   .cta-primary{
-    display:inline-block;background:linear-gradient(135deg,var(--accent),#8E0E22);
-    color:#fff;text-decoration:none;padding:16px 34px;border-radius:10px;
-    font-weight:700;font-size:16px;box-shadow:0 8px 24px rgba(179,18,43,0.35);
+    display:inline-block;background:linear-gradient(135deg,var(--accent),#D9740F);
+    color:#0B2B26;text-decoration:none;padding:16px 34px;border-radius:10px;
+    font-weight:800;font-size:16px;box-shadow:0 8px 24px rgba(242,153,74,0.35);
   }
   .price-note{margin-top:16px;color:var(--muted);font-size:13px;}
   .price-note strong{color:var(--text);font-size:16px;}
   .tagline{margin-top:10px;font-weight:700;font-size:17px;color:var(--accent-2);}
   .assist-note{max-width:480px;margin:22px auto 0;color:var(--muted);font-size:13.5px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;}
+
+  /* Demo class + scholarship */
+  .opportunities{background:var(--bg-alt);}
+  .opp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:760px;margin:0 auto;}
+  .opp-card{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:28px 24px;text-align:center;
+  }
+  .opp-card .opp-icon{font-size:30px;margin-bottom:14px;}
+  .opp-card h3{font-size:18px;margin-bottom:10px;}
+  .opp-card p{color:var(--muted);font-size:14px;margin-bottom:20px;}
+  .opp-btn{
+    display:inline-block;text-decoration:none;padding:12px 24px;border-radius:9px;
+    font-weight:700;font-size:14px;
+  }
+  .opp-btn.demo{background:linear-gradient(135deg,var(--accent-3),#1E8449);color:#fff;}
+  .opp-btn.scholarship{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#0B2B26;}
+
+  /* Pashto legend / proverb */
+  .legend{position:relative;text-align:center;overflow:hidden;}
+  .legend::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0.05;
+    background-image:radial-gradient(var(--accent-2) 1.5px, transparent 1.5px);
+    background-size:22px 22px;
+  }
+  .legend-quote-mark{font-size:48px;color:var(--accent-2);opacity:0.5;line-height:1;margin-bottom:6px;position:relative;z-index:1;}
+  .legend-pashto{font-size:24px;font-weight:700;color:var(--accent-2);max-width:600px;margin:0 auto 16px;position:relative;z-index:1;}
+  .legend-translation{color:var(--text);font-size:15px;max-width:520px;margin:0 auto 10px;position:relative;z-index:1;}
+  .legend-source{color:var(--muted);font-size:12.5px;letter-spacing:0.5px;position:relative;z-index:1;}
+
+  /* Post-registration benefits */
+  .benefits{background:var(--bg-alt);}
+  .benefits-slogan{
+    text-align:center;font-weight:800;font-size:20px;color:var(--accent-2);
+    max-width:560px;margin:0 auto 36px;line-height:1.7;
+  }
+  .benefit-card{
+    max-width:600px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border);
+    border-right:3px solid var(--accent-3);border-radius:10px;padding:22px 24px;
+    display:flex;gap:14px;align-items:flex-start;text-align:right;
+  }
+  .benefit-card .b-icon{font-size:24px;flex-shrink:0;}
+  .benefit-card h4{font-size:16px;margin-bottom:6px;}
+  .benefit-card p{color:var(--muted);font-size:14px;}
 
   section{padding:56px 24px;}
   .section-label{
@@ -153,8 +198,8 @@
   .signup-field input:focus{outline:none;border-color:var(--accent-2);}
   .signup-submit{
     width:100%;margin-top:6px;padding:14px;border:none;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent),#8E0E22);color:#fff;
-    font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;
+    background:linear-gradient(135deg,var(--accent),#D9740F);color:#0B2B26;
+    font-family:inherit;font-weight:800;font-size:15px;cursor:pointer;
   }
   .signup-submit:disabled{opacity:0.6;cursor:not-allowed;}
   .signup-status{margin-top:14px;font-size:13.5px;text-align:center;display:none;}
@@ -220,6 +265,25 @@
 <div class="motif"></div>
 
 <section class="hero">
+  <svg class="gate-icon" width="120" height="90" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">
+    <!-- left tower -->
+    <rect x="6" y="28" width="26" height="52" fill="#F5C24C" opacity="0.9"/>
+    <rect x="2" y="20" width="6" height="10" fill="#F5C24C" opacity="0.9"/>
+    <rect x="12" y="20" width="6" height="10" fill="#F5C24C" opacity="0.9"/>
+    <rect x="22" y="20" width="6" height="10" fill="#F5C24C" opacity="0.9"/>
+    <rect x="14" y="42" width="10" height="16" fill="#0B2B26" opacity="0.5"/>
+    <!-- right tower -->
+    <rect x="88" y="28" width="26" height="52" fill="#F5C24C" opacity="0.9"/>
+    <rect x="84" y="20" width="6" height="10" fill="#F5C24C" opacity="0.9"/>
+    <rect x="94" y="20" width="6" height="10" fill="#F5C24C" opacity="0.9"/>
+    <rect x="104" y="20" width="6" height="10" fill="#F5C24C" opacity="0.9"/>
+    <rect x="96" y="42" width="10" height="16" fill="#0B2B26" opacity="0.5"/>
+    <!-- arch connecting the two towers -->
+    <path d="M 32 50 Q 60 14 88 50 L 88 62 Q 60 30 32 62 Z" fill="#F2994A" opacity="0.9"/>
+    <!-- flag pole + flag -->
+    <rect x="59" y="2" width="2" height="16" fill="#27AE60" opacity="0.9"/>
+    <rect x="61" y="3" width="14" height="9" fill="#F2994A" opacity="0.9"/>
+  </svg>
   <div class="eyebrow">تعلیم · جدت · ترقی</div>
   <h1>اپنی آن لائن آمدنی KPK سے دنیا تک بنائیں۔</h1>
   <p class="sub">پختون نوجوانوں کے لیے ایک عملی کورس: شاپیفائی، ایمازون، ای بے اور علی بابا پر فروخت کریں، فیس بک مارکیٹ پلیس اور ٹک ٹاک شاپ چلائیں، AI ٹولز سے کام آسان بنائیں، اور انسٹاگرام پر اپنی آڈینس بڑھائیں — یہ سب اپنے موبائل یا لیپ ٹاپ سے۔</p>
@@ -227,9 +291,28 @@
   <div class="assist-note">اگر کسی کو مالی مدد کی ضرورت ہو تو مجھے ٹیکسٹ کریں۔ میں خود سبسکرپشن خرید دوں گا، اور یہ ہمیشہ کے لیے راز رہے گا۔</div>
 </section>
 
+<section class="opportunities">
+  <div class="section-label">فیصلہ کرنے سے پہلے</div>
+  <h2>پہلے دیکھیں، پھر فیصلہ کریں</h2>
+  <div class="opp-grid" style="grid-template-columns:1fr;max-width:460px;">
+    <div class="opp-card">
+      <div class="opp-icon">🎓</div>
+      <h3>مفت ڈیمو کلاس میں شامل ہوں</h3>
+      <p>پیسے خرچ کرنے سے پہلے ایک مکمل مفت ڈیمو کلاس میں شامل ہوں۔ اس میں آپ کو دکھایا جائے گا کہ شاپیفائی اسٹور کیسے بنتا ہے، ٹیچنگ کا انداز کیسا ہے، اور کورس میں اصل میں کیا ملے گا — کوئی وعدہ نہیں، صرف عملی جھلک۔ اگر پسند آئے تبھی آگے بڑھیں۔</p>
+      <a class="opp-btn demo" href="https://instagram.com/brilliantminds_572" target="_blank" rel="noopener">ڈیمو کلاس بک کریں</a>
+    </div>
+  </div>
+</section>
+
+<section class="legend">
+  <div class="legend-quote-mark">"</div>
+  <div class="legend-pashto">پوری دنیا کو فروخت کریں — کسی ایک جگہ محدود چھوٹی دکان بنانے کے بجائے۔</div>
+  <div class="legend-translation">Go out and sell to the whole world, instead of building a small shop limited to one place.</div>
+</section>
+
 <section>
   <div class="section-label">آپ کیا سیکھیں گے</div>
-  <h2>سات مہارتیں، ایک کورس۔</h2>
+  <h2>نو مہارتیں، ایک کورس۔</h2>
   <div class="grid">
     <div class="card"><div class="num">۰۱</div><h3>شاپیفائی اسٹورز</h3><p>اپنا اسٹور سیٹ اپ اور لانچ کریں، سبسکرپشن سمیت — جو کورس کی قیمت میں شامل ہے۔</p></div>
     <div class="card"><div class="num">۰۲</div><h3>ایمازون اور ای بے</h3><p>پروڈکٹس لسٹ کریں، مسابقتی قیمت لگائیں، اور دو بڑے مارکیٹ پلیسز پر آرڈرز مینج کریں۔</p></div>
@@ -238,11 +321,13 @@
     <div class="card"><div class="num">۰۵</div><h3>ٹک ٹاک شاپ</h3><p>مختصر ویڈیوز کو براہ راست فروخت میں تبدیل کریں، ایپ کے اندر ہی اسٹور فرنٹ کے ساتھ۔</p></div>
     <div class="card"><div class="num">۰۶</div><h3>انسٹاگرام گروتھ</h3><p>بغیر پیسے خرچ کیے آرگینک ریچ بڑھائیں اور فالوورز کو کسٹمرز میں تبدیل کریں۔</p></div>
     <div class="card"><div class="num">۰۷</div><h3>AI ٹولز اور کلاڈ ایجنٹ</h3><p>پروڈکٹ لسٹنگز خودکار بنائیں، AI سے تصاویر اور ویڈیوز ایڈٹ کریں، اور کلاڈ AI ایجنٹ استعمال کر کے کیپشنز، تفصیلات اور کسٹمر جوابات تیزی سے تیار کریں۔</p></div>
+    <div class="card"><div class="num">۰۸</div><h3>بنیادی انگریزی اور چینی زبان</h3><p>علی بابا اور دیگر سپلائرز کے ساتھ بات چیت کے لیے ضروری انگریزی اور چینی الفاظ اور جملے سیکھیں، تاکہ سورسنگ اور آرڈرز میں کوئی رکاوٹ نہ ہو۔</p></div>
+    <div class="card"><div class="num">۰۹</div><h3>Impact Partner اور PartnerStack</h3><p>دنیا کے بڑے برانڈز کے ساتھ Impact اور PartnerStack جیسے افیلی ایٹ نیٹ ورکس کے ذریعے تعاون کریں، اور بین الاقوامی پارٹنرشپس سے کمائی کا نیا ذریعہ بنائیں۔</p></div>
   </div>
 </section>
 
 <div class="badges">
-  <span>ایمازون</span><span>شاپیفائی</span><span>ای بے</span><span>علی بابا</span><span>ٹک ٹاک شاپ</span><span>فیس بک مارکیٹ پلیس</span><span>انسٹاگرام</span><span>AI اور کلاڈ ایجنٹ</span>
+  <span>ایمازون</span><span>شاپیفائی</span><span>ای بے</span><span>علی بابا</span><span>ٹک ٹاک شاپ</span><span>فیس بک مارکیٹ پلیس</span><span>انسٹاگرام</span><span>AI اور کلاڈ ایجنٹ</span><span>انگریزی اور چینی زبان</span><span>Impact و PartnerStack</span>
 </div>
 
 <section class="included">
@@ -253,14 +338,43 @@
     <li><span class="check">✓</span>ایک تیار شدہ لینڈنگ پیج جسے آپ کسٹمائز کر سکتے ہیں</li>
     <li><span class="check">✓</span>اوپر دیے گئے ہر پلیٹ فارم کے لیے مرحلہ وار ویڈیو لیکچرز</li>
     <li><span class="check">✓</span>AI اور کلاڈ ایجنٹ استعمال کر کے کام تیز اور آسان بنانے کی تربیت</li>
+    <li><span class="check">✓</span>سپلائرز سے بات چیت کے لیے بنیادی انگریزی اور چینی زبان کی تربیت</li>
+    <li><span class="check">✓</span>Impact اور PartnerStack کے ذریعے بڑے برانڈز کے ساتھ تعاون کرنے کی تربیت</li>
     <li><span class="check">✓</span>لائف ٹائم رسائی اور پلیٹ فارمز کی تبدیلی کے ساتھ اپڈیٹس</li>
   </ul>
+  <div class="assist-note" style="margin-top:24px;">
+    ادائیگی مکمل ہونے پر آپ کو ویب سائٹ اور <strong>"Pashtoon's Of Future"</strong> ایپ، دونوں پر مکمل رسائی مل جائے گی۔
+  </div>
 </section>
 
-<section class="closing">
-  <h2>آپ کا پہلا اسٹور اسی ہفتے لائیو ہو سکتا ہے۔</h2>
-  <p>پختونز آف فیوچر میں شامل ہوں اور آج ہی بنانا شروع کریں۔</p>
-  <a class="cta-primary" href="#payment">ابھی داخلہ لیں</a>
+<section class="benefits">
+  <div class="section-label">رجسٹریشن سے پہلے</div>
+  <h2>رجسٹریشن کے بعد آپ کو کیا ملے گا</h2>
+  <div class="benefits-slogan">وقت آ گیا ہے ایک اپ ڈیٹڈ پختون بننے کا۔</div>
+
+  <div class="benefit-card">
+    <div class="b-icon">🔒</div>
+    <div>
+      <h4>ہماری اپنی پرائیویٹ کمیونٹی تک رسائی</h4>
+      <p>بالکل فیس بک جیسا ایک نجی پلیٹ فارم — مگر مکمل طور پر بند اور محفوظ، جہاں کوئی باہر والا رسائی نہیں لے سکتا۔ صرف رجسٹرڈ طلبہ کے لیے۔</p>
+    </div>
+  </div>
+
+  <div class="benefit-card">
+    <div class="b-icon">💬</div>
+    <div>
+      <h4>مجھ سے اور اپنے ساتھی طلبہ سے براہ راست بات چیت</h4>
+      <p>اپنے مسائل شیئر کریں، سوالات پوچھیں، اور دوسرے طلبہ کے تجربات سے سیکھیں — ایک ایسی جگہ جہاں پوری پختون کمیونٹی مل کر آگے بڑھتی ہے۔</p>
+    </div>
+  </div>
+
+  <div class="benefit-card">
+    <div class="b-icon">🚀</div>
+    <div>
+      <h4>مسلسل رہنمائی اور سپورٹ</h4>
+      <p>رجسٹریشن کا مطلب صرف ویڈیوز دیکھنا نہیں — یہ ایک ایسی کمیونٹی میں شامل ہونا ہے جو آپ کے سوالات کے جوابات دیتی ہے اور آپ کو اٹکنے نہیں دیتی۔</p>
+    </div>
+  </div>
 </section>
 
 <section class="payment" id="payment">
@@ -268,96 +382,16 @@
   <h2>سکین کر کے ادائیگی کریں</h2>
   <div class="pay-card">
     <img src="qr-payment.jpg" alt="ادائیگی کے لیے QR کوڈ اسکین کریں">
-    <div class="pay-amount">واجب الادا رقم<br><strong>$10 USD</strong></div>
+    <div class="pay-amount">واجب الادا رقم<br><strong>$20 USD</strong></div>
 
     <div class="pay-steps">
       <h4>ادائیگی کیسے کریں</h4>
       <ol>
         <li>اپنی بینکنگ یا پیمنٹ ایپ کھولیں اور <strong>Scan QR</strong> کا آپشن منتخب کریں۔</li>
         <li>وصول کنندہ کی تفصیلات لوڈ کرنے کے لیے اوپر دیا گیا کوڈ اسکین کریں۔</li>
-        <li><strong>$10</strong> (یا اس کے برابر PKR/SAR) درج کریں اور ٹرانسفر مکمل کریں۔</li>
+        <li><strong>$20</strong> (یا اس کے برابر PKR/SAR) درج کریں اور ٹرانسفر مکمل کریں۔</li>
         <li>اپنی ادائیگی کی تصدیق کا اسکرین شاٹ لیں۔</li>
       </ol>
     </div>
 
-    <div class="pay-divider"><span>یا</span></div>
-
-    <div class="ep-alt">
-      <div class="ep-alt-label">متبادل: اگر آپ کے پاس بینک اکاؤنٹ نہیں ہے</div>
-      <div class="ep-box">
-        <div class="ep-label">ایزی پیسہ نمبر</div>
-        <div class="ep-number" dir="ltr">0316 5751290</div>
-        <div class="ep-label" style="margin-top:14px;">اکاؤنٹ کا نام</div>
-        <div class="ep-name">Usman Tariq</div>
-      </div>
-    </div>
-
-    <div class="pay-confirm">
-      ادائیگی کے بعد، اپنا اسکرین شاٹ اور ای میل بھیج کر کورس تک رسائی حاصل کریں۔ تصدیق کے لیے واٹس ایپ یا انسٹاگرام پر پیغام بھیجیں۔
-    </div>
-
-    <a href="batch1-register.html" class="cta-primary" style="display:block;margin-top:24px;">ادائیگی مکمل کر لی؟ رجسٹریشن کریں ◀</a>
-  </div>
-</section>
-
-<div class="motif"></div>
-<footer>پختونز آف فیوچر — تعلیم · جدت · ترقی</footer>
-
-<script>
-  // Optional: your Formspree endpoint, just for an instant email ping to you.
-  // The REAL save (that grants video access later) happens via /api/register below.
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // <-- replace with your real Formspree endpoint
-
-  const batchForm = document.getElementById("batchSignupForm");
-  const signupBtn = document.getElementById("signupBtn");
-  const signupStatus = document.getElementById("signupStatus");
-
-  batchForm.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    signupBtn.disabled = true;
-    signupBtn.textContent = "بھیجا جا رہا ہے...";
-    signupStatus.className = "signup-status";
-    signupStatus.textContent = "";
-
-    const name = document.getElementById("signupName").value;
-    const email = document.getElementById("signupEmail").value;
-    const whatsapp = document.getElementById("signupWhatsapp").value;
-
-    try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, whatsapp }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "register failed");
-
-      // Fire-and-forget notification email to you — doesn't block success either way
-      fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, whatsapp, batch: "Batch 1" }),
-      }).catch(() => {});
-
-      signupStatus.textContent = "شکریہ! آپ کی رجسٹریشن محفوظ ہو گئی ہے۔ ادائیگی کی تصدیق کے بعد آپ کو ویڈیوز تک رسائی مل جائے گی۔";
-      signupStatus.classList.add("ok");
-      batchForm.reset();
-    } catch (err) {
-      signupStatus.textContent = "معذرت، کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں یا واٹس ایپ پر رابطہ کریں۔";
-      signupStatus.classList.add("err");
-    } finally {
-      signupBtn.disabled = false;
-      signupBtn.textContent = "بیچ 1 میں شامل ہوں";
-    }
-  });
-</script>
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("sw.js").catch(() => {});
-    });
-  }
-</script>
-</body>
-</html>
+    <div clas
