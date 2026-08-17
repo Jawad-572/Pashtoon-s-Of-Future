@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بیچ 1 لاگ ان — پختونز آف فیوچر</title>
+<title>کمیونٹی لاگ ان — پختونز آف فیوچر</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#181B22; --card:#232733; --border:#2E3340; --text:#F5F6F8;
-    --muted:#9AA1AF; --accent:#3D8BFF; --accent-2:#7C5CFF;
+    --bg:#0B2B26; --card:#164039; --border:#2A5C50; --text:#F4F1E8;
+    --muted:#9FC5B8; --accent:#F2994A; --accent-2:#F5C24C; --accent-3:#27AE60;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -21,46 +21,55 @@
   }
   .card{
     max-width:420px;width:100%;background:var(--card);border:1px solid var(--border);
-    border-radius:18px;padding:34px 28px;
+    border-top:3px solid var(--accent-2);border-radius:14px;padding:34px 28px;
   }
-  h1{font-size:22px;text-align:center;margin-bottom:8px;}
-  .sub{color:var(--muted);font-size:14px;text-align:center;margin-bottom:28px;}
+  h1{font-size:20px;text-align:center;margin-bottom:8px;}
+  .sub{color:var(--muted);font-size:13.5px;text-align:center;margin-bottom:26px;}
   .field{margin-bottom:16px;text-align:right;}
   .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
   .field input{
     width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--border);
     background:var(--bg);color:var(--text);font-family:inherit;font-size:15px;
   }
-  .field input:focus{outline:none;border-color:var(--accent);}
+  .field input:focus{outline:none;border-color:var(--accent-2);}
   button{
     width:100%;margin-top:8px;padding:14px;border:none;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
-    font-family:inherit;font-weight:700;font-size:15px;cursor:pointer;
+    background:linear-gradient(135deg,var(--accent),#D9740F);color:#0B2B26;
+    font-family:inherit;font-weight:800;font-size:15px;cursor:pointer;
   }
   button:disabled{opacity:0.6;cursor:not-allowed;}
   .status{margin-top:16px;font-size:13.5px;text-align:center;display:none;}
-  .status.err{color:#FF6B6B;display:block;}
+  .status.err{color:#E4574C;display:block;}
+  .switch-link{display:block;text-align:center;margin-top:18px;color:var(--muted);font-size:13px;}
+  .switch-link a{color:var(--accent-2);text-decoration:none;font-weight:600;}
 </style>
 </head>
 <body>
   <div class="card">
-    <h1>بیچ 1 — پختونز آف فیوچر</h1>
-    <p class="sub">ویڈیوز تک رسائی کے لیے اپنا ای میل اور پاس ورڈ درج کریں۔</p>
+    <h1>کمیونٹی لاگ ان</h1>
+    <p class="sub">اپنے ای میل اور پاس ورڈ سے لاگ ان کریں۔</p>
     <form id="loginForm">
       <div class="field">
         <label for="email">ای میل ایڈریس</label>
         <input type="email" id="email" required placeholder="you@example.com">
       </div>
       <div class="field">
-        <label for="code">پاس ورڈ</label>
-        <input type="password" id="code" required placeholder="آپ کا ذاتی پاس ورڈ">
+        <label for="password">پاس ورڈ</label>
+        <input type="password" id="password" required placeholder="آپ کا پاس ورڈ">
       </div>
-      <button type="submit" id="loginBtn">داخل ہوں</button>
+      <button type="submit" id="loginBtn">لاگ ان کریں</button>
       <div class="status" id="status"></div>
     </form>
+    <span class="switch-link">اکاؤنٹ نہیں ہے؟ <a href="community-signup.html">اکاؤنٹ بنائیں</a></span>
   </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR_PUBLISHABLE_KEY";
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   const form = document.getElementById("loginForm");
   const btn = document.getElementById("loginBtn");
   const status = document.getElementById("status");
@@ -71,29 +80,18 @@
     btn.textContent = "چیک ہو رہا ہے...";
     status.className = "status";
 
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: document.getElementById("email").value,
-          code: document.getElementById("code").value,
-        }),
-      });
-      const data = await res.json();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-      if (res.ok) {
-        window.location.href = "/batch1-content.html";
-      } else {
-        status.textContent = data.error || "لاگ ان ناکام ہوا۔";
-        status.classList.add("err");
-      }
-    } catch (err) {
-      status.textContent = "سرور سے رابطہ نہیں ہو سکا۔ دوبارہ کوشش کریں۔";
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      status.textContent = error.message || "لاگ ان ناکام ہوا۔";
       status.classList.add("err");
-    } finally {
       btn.disabled = false;
-      btn.textContent = "داخل ہوں";
+      btn.textContent = "لاگ ان کریں";
+    } else {
+      window.location.href = "community.html";
     }
   });
 </script>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Pashtoon's Of Future</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --bg:#0B2B26; --card:#164039; --border:#2A5C50; --text:#F4F1E8;
+    --muted:#9FC5B8; --accent:#F2994A; --accent-2:#F5C24C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  .card{
+    max-width:400px;width:100%;background:var(--card);border:1px solid var(--border);
+    border-top:3px solid var(--accent-2);border-radius:14px;padding:32px 28px;
+  }
+  h1{font-size:20px;margin-bottom:6px;}
+  .sub{color:var(--muted);font-size:13.5px;margin-bottom:24px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .field input{
+    width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--border);
+    background:var(--bg);color:var(--text);font-size:14px;
+  }
+  .field input:focus{outline:none;border-color:var(--accent-2);}
+  button{
+    width:100%;margin-top:6px;padding:13px;border:none;border-radius:8px;
+    background:linear-gradient(135deg,var(--accent),#D9740F);color:#0B2B26;
+    font-weight:700;font-size:14px;cursor:pointer;
+  }
+  button:disabled{opacity:0.6;cursor:not-allowed;}
+  .status{margin-top:14px;font-size:13px;display:none;}
+  .status.err{color:#E4574C;display:block;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Admin Login</h1>
+    <p class="sub">Pashtoon's Of Future — Batch 2 registrations</p>
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required value="jawadali_572@yahoo.com">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required placeholder="Admin password">
+      </div>
+      <button type="submit" id="loginBtn">Log In</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+<script>
+  const form = document.getElementById("loginForm");
+  const btn = document.getElementById("loginBtn");
+  const status = document.getElementById("status");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = "Checking...";
+    status.className = "status";
+
+    try {
+      const res = await fetch("/api/admin-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+        }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        window.location.href = "/admin.html";
+      } else {
+        status.textContent = data.error || "Login failed.";
+        status.classList.add("err");
+      }
+    } catch (err) {
+      status.textContent = "Could not reach server. Try again.";
+      status.classList.add("err");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Log In";
+    }
+  });
+</script>
+</body>
+</html>
