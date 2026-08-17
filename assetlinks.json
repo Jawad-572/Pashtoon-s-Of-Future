@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.vercel.pashtoons_of_future.twa",
+    "sha256_cert_fingerprints": ["FF:C9:41:0D:05:00:89:A1:27:FE:AB:97:BC:F2:E9:D7:72:0B:48:75:17:90:90:A8:07:F5:A9:6C:DC:51:F8:D8"]
+  }
+}]
