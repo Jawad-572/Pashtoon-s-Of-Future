@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Batch 2 Registrations</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --bg:#0B2B26; --card:#164039; --border:#2A5C50; --text:#F4F1E8;
+    --muted:#9FC5B8; --accent:#F2994A; --accent-2:#F5C24C; --accent-3:#27AE60;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 20px;border-bottom:1px solid var(--border);
+  }
+  h1{font-size:16px;}
+  .logout-btn{
+    background:transparent;border:1px solid var(--border);color:var(--muted);
+    padding:7px 14px;border-radius:8px;font-size:12.5px;cursor:pointer;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  .tabs{display:flex;gap:8px;margin-bottom:18px;}
+  .section-tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:16px;}
+  .section-tab{
+    flex:1;text-align:center;background:var(--card);border:1px solid var(--border);color:var(--muted);
+    padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  }
+  .section-tab.active{background:linear-gradient(135deg,var(--accent),#D9740F);color:#0B2B26;border-color:transparent;}
+  .hidden{display:none !important;}
+  .tab{
+    background:var(--card);border:1px solid var(--border);color:var(--muted);
+    padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;
+  }
+  .tab.active{background:var(--accent);color:#0B2B26;border-color:transparent;font-weight:700;}
+  .row{
+    background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:16px 18px;margin-bottom:10px;
+  }
+  .row-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .row-name{font-weight:700;font-size:15px;}
+  .row-email{color:var(--muted);font-size:13px;margin-top:2px;}
+  .row-meta{color:var(--muted);font-size:12px;margin-top:8px;line-height:1.6;}
+  .badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:700;white-space:nowrap;}
+  .badge.approved{background:rgba(39,174,96,0.2);color:var(--accent-3);}
+  .badge.pending{background:rgba(242,153,74,0.2);color:var(--accent);}
+  .row-actions{display:flex;gap:8px;margin-top:12px;}
+  .row-actions button{
+    flex:1;padding:9px;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;
+  }
+  .btn-approve{background:var(--accent-3);color:#fff;}
+  .btn-deny{background:transparent;border:1px solid #E4574C !important;color:#E4574C;}
+  .btn-reset{background:transparent;border:1px solid var(--accent-2) !important;color:var(--accent-2);}
+  .empty{color:var(--muted);text-align:center;padding:40px 0;font-size:14px;}
+  .loading{color:var(--muted);text-align:center;padding:40px 0;}
+  .export-btn{
+    display:block;width:100%;margin-bottom:16px;padding:11px;border:1px solid var(--border);
+    background:var(--card);color:var(--accent-2);border-radius:9px;font-size:13px;font-weight:700;
+    text-decoration:none;text-align:center;cursor:pointer;
+  }
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:50;
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    background:var(--card);border:1px solid var(--border);border-top:3px solid var(--accent-2);
+    border-radius:14px;padding:26px;max-width:380px;width:100%;
+  }
+  .modal-box h3{font-size:16px;margin-bottom:6px;}
+  .modal-box .modal-email{color:var(--muted);font-size:13px;margin-bottom:16px;}
+  .modal-password{
+    background:var(--bg);border:1px dashed var(--border);border-radius:10px;
+    padding:14px;text-align:center;font-size:20px;font-weight:800;letter-spacing:2px;
+    color:var(--accent-2);margin-bottom:16px;user-select:all;
+  }
+  .modal-actions{display:flex;flex-direction:column;gap:8px;}
+  .modal-actions button, .modal-actions a{
+    padding:11px;border:none;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;
+    text-decoration:none;text-align:center;display:block;
+  }
+  .modal-copy{background:var(--accent-2);color:#0B2B26;}
+  .modal-whatsapp{background:#25D366;color:#fff;}
+  .modal-close{background:transparent;border:1px solid var(--border) !important;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <h3 id="modalTitle">Password Generated</h3>
+    <div class="modal-email" id="modalEmail"></div>
+    <div class="modal-password" id="modalPassword"></div>
+    <div class="modal-actions">
+      <button class="modal-copy" id="modalCopyBtn">📋 Copy Password</button>
+      <a class="modal-whatsapp" id="modalWhatsappBtn" href="#" target="_blank" rel="noopener">💬 Send via WhatsApp</a>
+      <button class="modal-close" id="modalCloseBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <h1>Batch 2 Registrations</h1>
+  <button class="logout-btn" id="logoutBtn">Log Out</button>
+</header>
+
+<div class="wrap">
+  <div class="section-tabs">
+    <div class="section-tab active" data-section="course">🎬 Course Access</div>
+    <div class="section-tab" data-section="community">💬 Community</div>
+  </div>
+
+  <div id="courseSection">
+    <a class="export-btn" href="/api/admin-export" download>⬇ Download All Registrations (CSV)</a>
+    <div class="tabs">
+      <div class="tab active" data-filter="pending">Pending</div>
+      <div class="tab" data-filter="approved">Approved</div>
+      <div class="tab" data-filter="all">All</div>
+    </div>
+    <div id="list" class="loading">Loading...</div>
+  </div>
+
+  <div id="communitySection" class="hidden">
+    <div class="tabs">
+      <div class="tab active" data-cfilter="pending">Pending</div>
+      <div class="tab" data-cfilter="approved">Approved</div>
+      <div class="tab" data-cfilter="all">All</div>
+    </div>
+    <div id="communityList" class="loading">Loading...</div>
+  </div>
+</div>
+
+<script>
+  let allStudents = [];
+  let currentFilter = "pending";
+  let allProfiles = [];
+  let currentCFilter = "pending";
+
+  document.querySelectorAll(".section-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".section-tab").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      const section = tab.dataset.section;
+      document.getElementById("courseSection").classList.toggle("hidden", section !== "course");
+      document.getElementById("communitySection").classList.toggle("hidden", section !== "community");
+      if (section === "community" && allProfiles.length === 0) loadProfiles();
+    });
+  });
+
+  async function loadStudents() {
+    const list = document.getElementById("list");
+    list.className = "loading";
+    list.textContent = "Loading...";
+
+    try {
+      const res = await fetch("/api/admin-list");
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 401) {
+          window.location.href = "/admin-login.html";
+          return;
+        }
+        throw new Error(data.error || "failed");
+      }
+      allStudents = data.students || [];
+      render();
+    } catch (err) {
+      list.textContent = "Could not load registrations.";
+    }
+  }
+
+  function render() {
+    const list = document.getElementById("list");
+    let filtered = allStudents;
+    if (currentFilter === "pending") filtered = allStudents.filter(s => !s.approved);
+    if (currentFilter === "approved") filtered = allStudents.filter(s => s.approved);
+
+    if (filtered.length === 0) {
+      list.className = "empty";
+      list.textContent = "Nothing here.";
+      return;
+    }
+
+    list.className = "";
+    list.innerHTML = "";
+    filtered.forEach((s) => {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="row-top">
+          <div>
+            <div class="row-name">${escapeHtml(s.name || "(no name)")}</div>
+            <div class="row-email">${escapeHtml(s.email)}</div>
+          </div>
+          <span class="badge ${s.approved ? "approved" : "pending"}">${s.approved ? "Approved" : "Pending"}</span>
+        </div>
+        <div class="row-meta">
+          ${s.whatsapp ? "WhatsApp: " + escapeHtml(s.whatsapp) + "<br>" : ""}
+          ${s.payment_ref ? "Payment ref: " + escapeHtml(s.payment_ref) + "<br>" : ""}
+          Registered: ${new Date(s.added_at).toLocaleString()}
+        </div>
+        <div class="row-actions">
+          ${s.approved
+            ? `<button class="btn-deny" data-email="${escapeAttr(s.email)}" data-approve="false">Revoke Access</button>
+               <button class="btn-reset" data-email="${escapeAttr(s.email)}" data-whatsapp="${escapeAttr(s.whatsapp || "")}">Reset Password</button>`
+            : `<button class="btn-approve" data-email="${escapeAttr(s.email)}" data-approve="true" data-whatsapp="${escapeAttr(s.whatsapp || "")}">Approve</button>
+               <button class="btn-deny" data-email="${escapeAttr(s.email)}" data-approve="false">Deny</button>`
+          }
+        </div>
+      `;
+      list.appendChild(row);
+    });
+
+    list.querySelectorAll("button[data-approve]").forEach((btn) => {
+      btn.addEventListener("click", () => setApproval(btn.dataset.email, btn.dataset.approve === "true", btn.dataset.whatsapp));
+    });
+    list.querySelectorAll("button.btn-reset").forEach((btn) => {
+      btn.addEventListener("click", () => resetPassword(btn.dataset.email, btn.dataset.whatsapp));
+    });
+  }
+
+  function waLink(whatsapp, message) {
+    if (!whatsapp) return null;
+    let digits = whatsapp.replace(/[^0-9]/g, "");
+    if (digits.startsWith("0")) digits = "92" + digits.slice(1);
+    if (!digits.startsWith("92") && digits.length <= 10) digits = "92" + digits;
+    return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+  }
+
+  function showPasswordModal(email, password, whatsapp) {
+    document.getElementById("modalEmail").textContent = email;
+    document.getElementById("modalPassword").textContent = password;
+
+    const waBtn = document.getElementById("modalWhatsappBtn");
+    const message = `Your Pashtoon's Of Future login:\nEmail: ${email}\nPassword: ${password}\n\nLog in at: https://pashtoons-of-future.vercel.app/batch1-login.html`;
+    const link = waLink(whatsapp, message);
+    if (link) {
+      waBtn.href = link;
+      waBtn.style.display = "block";
+    } else {
+      waBtn.style.display = "none";
+    }
+
+    document.getElementById("modalCopyBtn").onclick = () => {
+      navigator.clipboard.writeText(password).then(() => {
+        document.getElementById("modalCopyBtn").textContent = "✓ Copied";
+        setTimeout(() => { document.getElementById("modalCopyBtn").textContent = "📋 Copy Password"; }, 1500);
+      });
+    };
+
+    document.getElementById("modalOverlay").classList.add("show");
+  }
+
+  document.getElementById("modalCloseBtn").addEventListener("click", () => {
+    document.getElementById("modalOverlay").classList.remove("show");
+  });
+
+  async function setApproval(email, approve, whatsapp) {
+    try {
+      const res = await fetch("/api/admin-approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, approve }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error("failed");
+
+      if (data.generatedPassword) {
+        showPasswordModal(email, data.generatedPassword, whatsapp);
+      }
+
+      await loadStudents();
+    } catch (err) {
+      alert("Could not update this registration. Try again.");
+    }
+  }
+
+  async function resetPassword(email, whatsapp) {
+    if (!confirm("Generate a new password for " + email + "? Their old password will stop working immediately.")) {
+      return;
+    }
+    try {
+      const res = await fetch("/api/admin-reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error("failed");
+
+      showPasswordModal(email, data.newPassword, whatsapp);
+    } catch (err) {
+      alert("Could not reset password. Try again.");
+    }
+  }
+
+  function escapeHtml(str) {
+    const d = document.createElement("div");
+    d.textContent = str;
+    return d.innerHTML;
+  }
+  function escapeAttr(str) {
+    return String(str).replace(/"/g, "&quot;");
+  }
+
+  document.querySelectorAll(".tab[data-filter]").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab[data-filter]").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      currentFilter = tab.dataset.filter;
+      render();
+    });
+  });
+
+  document.querySelectorAll(".tab[data-cfilter]").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab[data-cfilter]").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      currentCFilter = tab.dataset.cfilter;
+      renderCommunity();
+    });
+  });
+
+  async function loadProfiles() {
+    const list = document.getElementById("communityList");
+    list.className = "loading";
+    list.textContent = "Loading...";
+
+    try {
+      const res = await fetch("/api/admin-community-list");
+      const data = await res.json();
+      if (!res.ok) {
+        if (res.status === 401) {
+          window.location.href = "/admin-login.html";
+          return;
+        }
+        throw new Error(data.error || "failed");
+      }
+      allProfiles = data.profiles || [];
+      renderCommunity();
+    } catch (err) {
+      list.textContent = "Could not load community accounts.";
+    }
+  }
+
+  function renderCommunity() {
+    const list = document.getElementById("communityList");
+    let filtered = allProfiles;
+    if (currentCFilter === "pending") filtered = allProfiles.filter(p => !p.community_approved);
+    if (currentCFilter === "approved") filtered = allProfiles.filter(p => p.community_approved);
+
+    if (filtered.length === 0) {
+      list.className = "empty";
+      list.textContent = "Nothing here.";
+      return;
+    }
+
+    list.className = "";
+    list.innerHTML = "";
+    filtered.forEach((p) => {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="row-top">
+          <div>
+            <div class="row-name">${escapeHtml(p.email)}</div>
+          </div>
+          <span class="badge ${p.community_approved ? "approved" : "pending"}">${p.community_approved ? "Approved" : "Pending"}</span>
+        </div>
+        <div class="row-meta">
+          Signed up: ${new Date(p.created_at).toLocaleString()}
+        </div>
+        <div class="row-actions">
+          ${p.community_approved
+            ? `<button class="btn-deny" data-id="${escapeAttr(p.id)}" data-approve="false">Revoke</button>`
+            : `<button class="btn-approve" data-id="${escapeAttr(p.id)}" data-approve="true">Approve</button>
+               <button class="btn-deny" data-id="${escapeAttr(p.id)}" data-approve="false">Deny</button>`
+          }
+        </div>
+      `;
+      list.appendChild(row);
+    });
+
+    list.querySelectorAll("button[data-id]").forEach((btn) => {
+      btn.addEventListener("click", () => setCommunityApproval(btn.dataset.id, btn.dataset.approve === "true"));
+    });
+  }
+
+  async function setCommunityApproval(id, approve) {
+    try {
+      const res = await fetch("/api/admin-community-approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, approve }),
+      });
+      if (!res.ok) throw new Error("failed");
+      await loadProfiles();
+    } catch (err) {
+      alert("Could not update this community account. Try again.");
+    }
+  }
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    await fetch("/api/admin-logout", { method: "POST" });
+    window.location.href = "/admin-login.html";
+  });
+
+  loadStudents();
+</script>
+</body>
+</html>
