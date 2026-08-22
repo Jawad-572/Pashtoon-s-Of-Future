@@ -46,6 +46,21 @@
   }
   .composer button:disabled{opacity:0.5;cursor:not-allowed;}
 
+  .file-row{display:flex;align-items:center;gap:10px;margin-top:10px;}
+  .file-btn{
+    background:var(--bg);border:1px solid var(--border);color:var(--muted);
+    padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;
+  }
+  .file-name-preview{color:var(--accent-2);font-size:12.5px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .file-remove{background:transparent;border:none;color:#E4574C;font-size:13px;cursor:pointer;}
+
+  .post-attachment{margin-top:10px;}
+  .post-attachment img{max-width:100%;border-radius:8px;display:block;}
+  .post-attachment .pdf-link{
+    display:inline-flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);
+    border-radius:8px;padding:10px 14px;color:var(--accent-2);text-decoration:none;font-size:13.5px;
+  }
+
   .post{
     background:var(--card);border:1px solid var(--border);border-radius:12px;
     padding:16px 18px;margin-bottom:12px;
@@ -124,6 +139,12 @@
     wrap.innerHTML = `
       <div class="composer">
         <textarea id="postContent" placeholder="اپنا سوال یا تجربہ شیئر کریں..."></textarea>
+        <div class="file-row">
+          <label class="file-btn" for="fileInput">📎 PDF یا تصویر لگائیں</label>
+          <input type="file" id="fileInput" accept=".pdf,image/*" style="display:none;">
+          <span class="file-name-preview" id="fileNamePreview"></span>
+          <button class="file-remove hidden" id="fileRemoveBtn">✕</button>
+        </div>
         <button id="postBtn">پوسٹ کریں</button>
         <div style="clear:both;"></div>
       </div>
@@ -131,21 +152,77 @@
       <div class="refresh-note">ہر 20 سیکنڈ میں خودکار اپڈیٹ ہوتا ہے</div>
     `;
     document.getElementById("postBtn").addEventListener("click", submitPost);
+
+    const fileInput = document.getElementById("fileInput");
+    const fileNamePreview = document.getElementById("fileNamePreview");
+    const fileRemoveBtn = document.getElementById("fileRemoveBtn");
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const isPdf = file.type === "application/pdf";
+      const isImage = file.type.startsWith("image/");
+      if (!isPdf && !isImage) {
+        alert("صرف PDF یا تصویر منسلک کی جا سکتی ہے۔");
+        fileInput.value = "";
+        return;
+      }
+      if (file.size > 15 * 1024 * 1024) {
+        alert("فائل کا سائز 15MB سے زیادہ نہیں ہونا چاہیے۔");
+        fileInput.value = "";
+        return;
+      }
+
+      fileNamePreview.textContent = file.name;
+      fileRemoveBtn.classList.remove("hidden");
+    });
+
+    fileRemoveBtn.addEventListener("click", () => {
+      fileInput.value = "";
+      fileNamePreview.textContent = "";
+      fileRemoveBtn.classList.add("hidden");
+    });
   }
 
   async function submitPost() {
     const textarea = document.getElementById("postContent");
     const content = textarea.value.trim();
-    if (!content) return;
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
+    if (!content && !file) return;
 
     const btn = document.getElementById("postBtn");
     btn.disabled = true;
     btn.textContent = "بھیجا جا رہا ہے...";
 
+    let filePath = null;
+    let fileName = null;
+
+    if (file) {
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      filePath = `${currentUser.id}/${Date.now()}_${safeName}`;
+      fileName = file.name;
+
+      const { error: uploadError } = await supabase.storage
+        .from("community-uploads")
+        .upload(filePath, file);
+
+      if (uploadError) {
+        btn.disabled = false;
+        btn.textContent = "پوسٹ کریں";
+        alert("فائل اپ لوڈ نہیں ہو سکی: " + uploadError.message);
+        return;
+      }
+    }
+
     const { error } = await supabase.from("community_posts").insert({
       user_id: currentUser.id,
       author_email: currentUser.email,
-      content: content,
+      content: content || (fileName ? "📎 " + fileName : ""),
+      file_path: filePath,
+      file_name: fileName,
     });
 
     btn.disabled = false;
@@ -153,6 +230,9 @@
 
     if (!error) {
       textarea.value = "";
+      fileInput.value = "";
+      document.getElementById("fileNamePreview").textContent = "";
+      document.getElementById("fileRemoveBtn").classList.add("hidden");
       loadPosts();
     } else {
       alert("پوسٹ نہیں ہو سکی: " + error.message);
@@ -178,13 +258,34 @@
       return;
     }
 
-    list.innerHTML = posts.map(p => `
-      <div class="post">
-        <span class="post-author">${escapeHtml(p.author_email)}</span>
-        <span class="post-time">${new Date(p.created_at).toLocaleString()}</span>
-        <div class="post-content">${escapeHtml(p.content)}</div>
-      </div>
-    `).join("");
+    const html = await Promise.all(posts.map(async (p) => {
+      let attachmentHtml = "";
+      if (p.file_path) {
+        const { data: signed } = await supabase.storage
+          .from("community-uploads")
+          .createSignedUrl(p.file_path, 3600);
+
+        if (signed && signed.signedUrl) {
+          const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(p.file_name || "");
+          if (isImage) {
+            attachmentHtml = `<div class="post-attachment"><img src="${signed.signedUrl}" alt="attachment"></div>`;
+          } else {
+            attachmentHtml = `<div class="post-attachment"><a class="pdf-link" href="${signed.signedUrl}" target="_blank" rel="noopener">📄 ${escapeHtml(p.file_name || "PDF")}</a></div>`;
+          }
+        }
+      }
+
+      return `
+        <div class="post">
+          <span class="post-author">${escapeHtml(p.author_email)}</span>
+          <span class="post-time">${new Date(p.created_at).toLocaleString()}</span>
+          <div class="post-content">${escapeHtml(p.content)}</div>
+          ${attachmentHtml}
+        </div>
+      `;
+    }));
+
+    list.innerHTML = html.join("");
   }
 
   function escapeHtml(str) {
