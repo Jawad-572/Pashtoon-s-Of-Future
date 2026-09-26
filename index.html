@@ -45,15 +45,15 @@
   }
   .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
 
-  /* Tribal-rug style zigzag motif strip, used as section dividers */
+  /* Barcode / shipping-label motif strip, used as section dividers */
   .motif{
-    height:10px;
-    background:
-      linear-gradient(135deg, var(--accent) 25%, transparent 25%) 0 0/16px 16px,
-      linear-gradient(-135deg, var(--accent-2) 25%, transparent 25%) 0 0/16px 16px,
-      linear-gradient(45deg, var(--accent-2) 25%, transparent 25%) 0 0/16px 16px,
-      linear-gradient(-45deg, var(--accent) 25%, transparent 25%) 0 0/16px 16px;
+    height:14px;
     background-color:var(--bg);
+    background-image: repeating-linear-gradient(90deg,
+      var(--accent) 0 2px, transparent 2px 5px,
+      var(--accent-2) 5px 6px, transparent 6px 11px,
+      var(--accent) 11px 14px, transparent 14px 19px,
+      var(--accent-2) 19px 20px, transparent 20px 27px);
   }
 
   header{
@@ -165,6 +165,27 @@
     border:1px solid var(--border);border-radius:20px;padding:7px 16px;
   }
 
+  .mentorship{position:relative;}
+  .mentor-card{
+    max-width:640px;margin:0 auto;background:linear-gradient(160deg,var(--card),var(--bg-alt));
+    border:1px solid var(--border);border-top:3px solid var(--accent);
+    border-radius:16px;padding:32px;text-align:center;
+  }
+  .mentor-price{
+    display:inline-flex;align-items:baseline;gap:6px;background:var(--bg);
+    border:1px solid var(--border);border-radius:12px;padding:10px 22px;margin:6px 0 22px;
+  }
+  .mentor-price strong{font-size:34px;color:var(--accent-2);font-weight:800;}
+  .mentor-price span{color:var(--muted);font-size:13px;}
+  .mentor-desc{color:var(--text);font-size:15.5px;max-width:520px;margin:0 auto 24px;}
+  .mentor-terms{list-style:none;text-align:right;max-width:480px;margin:0 auto 26px;}
+  .mentor-terms li{
+    background:var(--bg);border:1px solid var(--border);border-right:3px solid var(--accent);
+    border-radius:9px;padding:13px 16px;margin-bottom:10px;font-size:14.5px;color:var(--text);
+  }
+  .mentor-terms li strong{color:var(--accent-2);}
+  .mentor-goal{color:var(--muted);font-size:13.5px;max-width:480px;margin:0 auto 24px;font-style:normal;}
+
   .included{background:var(--bg-alt);}
   .included ul{list-style:none;max-width:520px;margin:0 auto;}
   .included li{
@@ -273,25 +294,32 @@
 <div class="motif"></div>
 
 <section class="hero">
-  <div class="eyebrow">کاروباری افراد اور انٹرپرینیورز کے لیے</div>
-  <h1>اپنے کاروبار کو مقامی دکان سے عالمی برانڈ بنائیں۔</h1>
-  <p class="sub">شاپیفائی، ایمازون، ای بے اور علی بابا کے ذریعے دنیا بھر کے خریداروں تک پہنچیں، ٹک ٹاک شاپ اور فیس بک مارکیٹ پلیس سے نئے کسٹمرز حاصل کریں، اور AI ٹولز سے مارکیٹنگ، آرڈرز اور کسٹمر سپورٹ کو خودکار بنائیں — کم لاگت، بغیر انوینٹری کے خطرے کے، اور اپنے موبائل یا لیپ ٹاپ سے۔</p>
-  <div class="tagline">آج کی سرمایہ کاری، کل کا عالمی کاروبار۔</div>
+  <div class="eyebrow">پختون نوجوان انٹرپرینیورز کے لیے</div>
+  <h1>جو آج صرف ایک خواب ہے، وہی کل تمہارا برانڈ بنے گا۔</h1>
+  <p class="sub">دنیا بھر کے کروڑوں خریدار اسی لمحے شاپیفائی، ایمازون، ای بے اور ٹک ٹاک شاپ پر خریداری کر رہے ہیں۔ سوال یہ نہیں کہ موقع موجود ہے یا نہیں — سوال یہ ہے کہ تم اسے پکڑنے کے لیے تیار ہو یا نہیں۔ اپنے موبائل یا لیپ ٹاپ سے، بغیر انوینٹری کے خطرے کے، اپنا پہلا عالمی اسٹور آج ہی کھڑا کرو۔</p>
+  <div class="tagline">ہر بڑا برانڈ کبھی ایک چھوٹے، ڈرپوک قدم سے شروع ہوا تھا — یہ تمہارا قدم ہے۔</div>
   <div class="hero-cta"><a href="#payment" class="cta-primary">ابھی داخلہ لیں</a></div>
 
   <svg class="horizon" viewBox="0 0 1000 190" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#FFE9A8" stop-opacity="0.95"/>
-        <stop offset="45%" stop-color="#FFD166" stop-opacity="0.45"/>
-        <stop offset="100%" stop-color="#FFD166" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <circle cx="500" cy="118" r="150" fill="url(#sunGlow)"/>
-    <circle cx="500" cy="122" r="44" fill="#FFE08A"/>
-    <path d="M0 132 L70 96 L130 120 L210 70 L290 118 L360 92 L430 128 L500 104 L570 130 L650 84 L730 122 L810 78 L890 118 L950 96 L1000 116 L1000 190 L0 190 Z" fill="#2B6699" opacity="0.75"/>
-    <path d="M0 150 L90 118 L170 146 L260 104 L350 148 L440 128 L520 152 L610 112 L700 150 L790 116 L880 148 L1000 122 L1000 190 L0 190 Z" fill="#183F6E"/>
-    <path d="M0 172 L120 152 L240 170 L380 150 L520 172 L660 154 L800 172 L920 156 L1000 168 L1000 190 L0 190 Z" fill="#102B4E"/>
+    <!-- rising sales/growth bars -->
+    <rect x="60"  y="150" width="66" height="40" rx="4" fill="#183F6E"/>
+    <rect x="160" y="130" width="66" height="60" rx="4" fill="#1F4C82"/>
+    <rect x="260" y="106" width="66" height="84" rx="4" fill="#2B6699"/>
+    <rect x="360" y="150" width="66" height="40" rx="4" fill="#183F6E"/>
+    <rect x="460" y="88"  width="66" height="102" rx="4" fill="#2B6699" opacity="0.9"/>
+    <rect x="560" y="118" width="66" height="72" rx="4" fill="#1F4C82"/>
+    <rect x="660" y="70"  width="66" height="120" rx="4" fill="#2B6699"/>
+    <rect x="760" y="100" width="66" height="90" rx="4" fill="#1F4C82"/>
+    <rect x="860" y="52"  width="66" height="138" rx="4" fill="#E9A04B"/>
+    <!-- trend line trending upward across the bars -->
+    <path d="M60 150 L260 106 L460 88 L660 70 L893 52" fill="none" stroke="#FFD166" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>
+    <!-- package icon at the peak -->
+    <g transform="translate(866,18)">
+      <rect x="0" y="10" width="54" height="42" rx="4" fill="#FFF9EC"/>
+      <path d="M0 24 L54 24" stroke="#E08E0B" stroke-width="4"/>
+      <path d="M27 10 L27 52" stroke="#E08E0B" stroke-width="4"/>
+      <path d="M0 24 L27 10 L54 24" fill="none" stroke="#0B1F3A" stroke-width="2" opacity="0.25"/>
+    </g>
   </svg>
 </section>
 
@@ -334,118 +362,6 @@
   </div>
 </section>
 
-<div class="badges">
-  <span>ایمازون</span><span>شاپیفائی</span><span>ای بے</span><span>علی بابا</span><span>ٹک ٹاک شاپ</span><span>فیس بک مارکیٹ پلیس</span><span>انسٹاگرام</span><span>AI اور کلاڈ ایجنٹ</span><span>انگریزی اور چینی زبان</span><span>Impact و PartnerStack</span><span>ایمازون افیلی ایٹ</span><span>پنٹرسٹ</span><span>ایمازون انفلوئنسرز</span><span>ڈراپ شپنگ</span>
-</div>
-
-<section class="included">
-  <div class="section-label">شامل ہے</div>
-  <h2>کوئی چھپے ہوئے اخراجات نہیں۔</h2>
-  <ul>
-    <li><span class="check">✓</span>آپ کے پہلے اسٹور کے لیے شاپیفائی سبسکرپشن، مکمل طور پر شامل</li>
-    <li><span class="check">✓</span>ایک تیار شدہ لینڈنگ پیج جسے آپ کسٹمائز کر سکتے ہیں</li>
-    <li><span class="check">✓</span>اوپر دیے گئے ہر پلیٹ فارم کے لیے مرحلہ وار ویڈیو لیکچرز</li>
-    <li><span class="check">✓</span>AI اور کلاڈ ایجنٹ استعمال کر کے کام تیز اور آسان بنانے کی تربیت</li>
-    <li><span class="check">✓</span>سپلائرز سے بات چیت کے لیے بنیادی انگریزی اور چینی زبان کی تربیت</li>
-    <li><span class="check">✓</span>Impact اور PartnerStack کے ذریعے بڑے برانڈز کے ساتھ تعاون کرنے کی تربیت</li>
-    <li><span class="check">✓</span>لائف ٹائم رسائی اور پلیٹ فارمز کی تبدیلی کے ساتھ اپڈیٹس</li>
-  </ul>
-  <div class="assist-note" style="margin-top:24px;">
-    ادائیگی مکمل ہونے پر آپ کو ویب سائٹ اور <strong>"Pashtoon's Of Future"</strong> ایپ، دونوں پر مکمل رسائی مل جائے گی۔
-  </div>
-  <div class="assist-note" style="margin-top:14px;">
-    یہ رقم صرف کورس کی فیس نہیں — یہ اس ایپ کو چلانے اور اس کی سبسکرپشنز کو فعال رکھنے کے اخراجات پورے کرتی ہے، تاکہ ایپ ہمیشہ لائیو اور فعال رہے۔ اس کے بدلے آپ کو <strong>$50 میں لائف ٹائم رسائی</strong> (یا $25 کی دو قسطوں کا آسان آپشن) اور ہماری نجی کمیونٹی میں ہر چیز محفوظ طریقے سے شیئر کرنے کی سہولت ملتی ہے۔
-  </div>
-</section>
-
-<section class="benefits">
-  <div class="section-label">رجسٹریشن سے پہلے</div>
-  <h2>رجسٹریشن کے بعد آپ کو کیا ملے گا</h2>
-  <div class="benefits-slogan">وقت آ گیا ہے ایک اپ ڈیٹڈ پختون بننے کا۔</div>
-
-  <div class="benefit-card">
-    <div class="b-icon">🔒</div>
-    <div>
-      <h4>ہماری اپنی پرائیویٹ کمیونٹی تک رسائی</h4>
-      <p>بالکل فیس بک جیسا ایک نجی پلیٹ فارم — مگر مکمل طور پر بند اور محفوظ، جہاں کوئی باہر والا رسائی نہیں لے سکتا۔ صرف رجسٹرڈ طلبہ کے لیے۔</p>
-    </div>
-  </div>
-
-  <div class="benefit-card">
-    <div class="b-icon">💬</div>
-    <div>
-      <h4>مجھ سے اور اپنے ساتھی طلبہ سے براہ راست بات چیت</h4>
-      <p>اپنے مسائل شیئر کریں، سوالات پوچھیں، اور دوسرے طلبہ کے تجربات سے سیکھیں — ایک ایسی جگہ جہاں پوری پختون کمیونٹی مل کر آگے بڑھتی ہے۔</p>
-    </div>
-  </div>
-
-  <div class="benefit-card">
-    <div class="b-icon">🚀</div>
-    <div>
-      <h4>مسلسل رہنمائی اور سپورٹ</h4>
-      <p>رجسٹریشن کا مطلب صرف ویڈیوز دیکھنا نہیں — یہ ایک ایسی کمیونٹی میں شامل ہونا ہے جو آپ کے سوالات کے جوابات دیتی ہے اور آپ کو اٹکنے نہیں دیتی۔</p>
-    </div>
-  </div>
-</section>
-
-<section class="payment" id="payment">
-  <div class="section-label">ابھی داخلہ لیں</div>
-  <h2>سکین کر کے ادائیگی کریں</h2>
-  <div class="pay-card">
-    <div class="plans">
-      <div class="plan">
-        <div class="plan-name">دو قسطوں کا پلان</div>
-        <div class="plan-price"><strong><bdi>$25</bdi></strong> × 2</div>
-        <div class="plan-note">دو ماہ تک ہر ماہ <bdi>$25</bdi></div>
-      </div>
-      <div class="plan lifetime">
-        <div class="plan-name">لائف ٹائم رسائی</div>
-        <div class="plan-price"><strong><bdi>$50</bdi></strong></div>
-        <div class="plan-note">ایک ہی ادائیگی</div>
-      </div>
-    </div>
-    <img src="qr-payment.jpg" alt="ادائیگی کے لیے QR کوڈ اسکین کریں">
-    <div class="pay-amount">اپنا پلان منتخب کریں اور اسی کے مطابق رقم بھیجیں:<br><strong><bdi>$25</bdi> کی دو قسطیں</strong> &nbsp;یا&nbsp; <strong><bdi>$50</bdi> لائف ٹائم</strong></div>
-
-    <div class="pay-steps">
-      <h4>ادائیگی کیسے کریں</h4>
-      <ol>
-        <li>اپنی بینکنگ یا پیمنٹ ایپ کھولیں اور <strong>Scan QR</strong> کا آپشن منتخب کریں۔</li>
-        <li>وصول کنندہ کی تفصیلات لوڈ کرنے کے لیے اوپر دیا گیا کوڈ اسکین کریں۔</li>
-        <li>اپنے منتخب پلان کی رقم — <strong>$25</strong> (قسط) یا <strong>$50</strong> (لائف ٹائم) — یا اس کے برابر PKR/SAR درج کریں اور ٹرانسفر مکمل کریں۔</li>
-        <li>اپنی ادائیگی کی تصدیق کا اسکرین شاٹ لیں۔</li>
-      </ol>
-    </div>
-
-    <div class="pay-divider"><span>یا</span></div>
-
-    <div class="ep-alt">
-      <div class="ep-alt-label">متبادل: اگر آپ کے پاس بینک اکاؤنٹ نہیں ہے</div>
-      <div class="ep-box">
-        <div class="ep-label">ایزی پیسہ نمبر</div>
-        <div class="ep-number" dir="ltr">0316 5751290</div>
-        <div class="ep-label" style="margin-top:14px;">اکاؤنٹ کا نام</div>
-        <div class="ep-name">Usman Tariq</div>
-      </div>
-    </div>
-
-    <div class="pay-confirm">
-      ادائیگی کے بعد (قسطوں کی صورت میں ہر قسط کے بعد)، اپنا اسکرین شاٹ اور ای میل بھیج کر کورس تک رسائی حاصل کریں۔ تصدیق کے لیے واٹس ایپ یا انسٹاگرام پر پیغام بھیجیں۔
-    </div>
-
-    <a href="batch1-register.html" class="cta-primary" style="display:block;margin-top:24px;">ادائیگی مکمل کر لی؟ رجسٹریشن کریں ◀</a>
-  </div>
-</section>
-
-<div class="motif"></div>
-<footer>پختونز آف فیوچر — تعلیم · جدت · ترقی<br><a href="privacy-policy.html" style="color:var(--muted);font-size:11px;">پرائیویسی پالیسی</a></footer>
-
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("sw.js").catch(() => {});
-    });
-  }
-</script>
-</body>
-</html>
+<section class="mentorship">
+  <div class="section-label">خصوصی موقع</div>
+  <h2>ون آن ون: ایما
